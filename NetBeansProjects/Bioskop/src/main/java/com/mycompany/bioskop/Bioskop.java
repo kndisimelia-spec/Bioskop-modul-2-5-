@@ -31,7 +31,8 @@ public class Bioskop {
             System.out.println("1. Tambah Jadwal Film");
             System.out.println("2. Jadwal Film");
             System.out.println("3. Cari Film");
-            System.out.println("4. Keluar");
+            System.out.println("4. Pesan Tiket");
+            System.out.println("5. Keluar");
             System.out.print("Pilih menu: ");
 
             int pilihan = scanner.nextInt();
@@ -60,6 +61,7 @@ public class Bioskop {
                         System.out.println("Pilih jenis film:");
                         System.out.println("1. Film 2D");
                         System.out.println("2. Film 3D");
+                        System.out.println("3. Film Premium");
                         System.out.print("Pilih: ");
 
                         int jenisFilm = scanner.nextInt();
@@ -85,6 +87,18 @@ public class Bioskop {
 
                             daftarFilm[jumlahFilm] =
                                 new Film3D(
+                                    judul,
+                                    nomorFilm,
+                                    jamTayang,
+                                    studio
+                                );
+
+                            jumlahFilm++;
+
+                        } else if (jenisFilm == 3) {
+
+                            daftarFilm[jumlahFilm] =
+                                new FilmPremium(
                                     judul,
                                     nomorFilm,
                                     jamTayang,
@@ -160,6 +174,33 @@ public class Bioskop {
 
                 case 4:
 
+                    System.out.println();
+                    System.out.println("===== PESAN TIKET =====");
+
+                    System.out.print("Masukkan nomor film: ");
+                    int nomorPesan = scanner.nextInt();
+                    scanner.nextLine();
+
+                    boolean ditemukan = false;
+
+                    for (int i = 0; i < jumlahFilm; i++) {
+
+                        if (daftarFilm[i].getNomorFilm() == nomorPesan) {
+
+                            pesanTiket(daftarFilm[i]);
+                            ditemukan = true;
+                            break;
+                        }
+                    }
+
+                    if (!ditemukan) {
+                        System.out.println("Film tidak ditemukan.");
+                    }
+
+                    break;
+
+                case 5:
+
                     isRunning = false;
 
                     System.out.println();
@@ -174,6 +215,14 @@ public class Bioskop {
         }
 
         scanner.close();
+    }
+
+    // Method untuk menunjukkan Runtime Polymorphism / Dynamic Binding
+
+    public static void pesanTiket(Film film) {
+
+        System.out.println("===== TIKET DIPESAN =====");
+        film.tampilkanInfo();
     }
 
     // Overloading Modul 4
