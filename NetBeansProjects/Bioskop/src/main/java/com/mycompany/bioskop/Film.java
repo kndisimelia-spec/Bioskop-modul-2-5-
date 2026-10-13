@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.bioskop;
 
-/**
- *
- * @author user
- */
-public class Film {
-    
+public abstract class Film {
+
     private String judul;
     private int nomorFilm;
     private String jamTayang;
@@ -55,5 +47,9 @@ public class Film {
         System.out.println("Judul      : " + judul);
         System.out.println("Nomor Film : " + nomorFilm);
         System.out.println("Jam Tayang : " + jamTayang);
+
+        tampilkanJenisFilm();
     }
+
+    public abstract void tampilkanJenisFilm();
 }

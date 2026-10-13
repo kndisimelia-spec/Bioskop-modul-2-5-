@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.bioskop;
 
-/**
- *
- * @author user
- */
 import java.util.Scanner;
 
 public class Bioskop {
@@ -19,7 +11,7 @@ public class Bioskop {
         Film[] daftarFilm = new Film[10];
 
         int jumlahFilm = 0;
-        Boolean isRunning = true;
+        boolean isRunning = true;
 
         System.out.println("================================");
         System.out.println("       SISTEM BIOSKOP KITA");
@@ -32,7 +24,8 @@ public class Bioskop {
             System.out.println("2. Jadwal Film");
             System.out.println("3. Cari Film");
             System.out.println("4. Pesan Tiket");
-            System.out.println("5. Keluar");
+            System.out.println("5. Beri Rating");
+            System.out.println("6. Keluar");
             System.out.print("Pilih menu: ");
 
             int pilihan = scanner.nextInt();
@@ -67,45 +60,47 @@ public class Bioskop {
                         int jenisFilm = scanner.nextInt();
                         scanner.nextLine();
 
-                        System.out.print("Nomor studio: ");
-                        int studio = scanner.nextInt();
-                        scanner.nextLine();
+                        if (jenisFilm >= 1 && jenisFilm <= 3) {
 
-                        if (jenisFilm == 1) {
+                            System.out.print("Nomor studio: ");
+                            int studio = scanner.nextInt();
+                            scanner.nextLine();
 
-                            daftarFilm[jumlahFilm] =
-                                new Film2D(
-                                    judul,
-                                    nomorFilm,
-                                    jamTayang,
-                                    studio
-                                );
+                            if (jenisFilm == 1) {
 
-                            jumlahFilm++;
+                                daftarFilm[jumlahFilm] =
+                                        new Film2D(
+                                                judul,
+                                                nomorFilm,
+                                                jamTayang,
+                                                studio);
 
-                        } else if (jenisFilm == 2) {
+                                jumlahFilm++;
 
-                            daftarFilm[jumlahFilm] =
-                                new Film3D(
-                                    judul,
-                                    nomorFilm,
-                                    jamTayang,
-                                    studio
-                                );
+                            } else if (jenisFilm == 2) {
 
-                            jumlahFilm++;
+                                daftarFilm[jumlahFilm] =
+                                        new Film3D(
+                                                judul,
+                                                nomorFilm,
+                                                jamTayang,
+                                                studio);
 
-                        } else if (jenisFilm == 3) {
+                                jumlahFilm++;
 
-                            daftarFilm[jumlahFilm] =
-                                new FilmPremium(
-                                    judul,
-                                    nomorFilm,
-                                    jamTayang,
-                                    studio
-                                );
+                            } else {
 
-                            jumlahFilm++;
+                                daftarFilm[jumlahFilm] =
+                                        new FilmPremium(
+                                                judul,
+                                                nomorFilm,
+                                                jamTayang,
+                                                studio);
+
+                                jumlahFilm++;
+                            }
+
+                            System.out.println("Jadwal film berhasil ditambahkan.");
 
                         } else {
 
@@ -155,7 +150,10 @@ public class Bioskop {
                         System.out.print("Masukkan judul film: ");
                         String judulCari = scanner.nextLine();
 
-                        cariFilm(daftarFilm, jumlahFilm, judulCari);
+                        cariFilm(
+                                daftarFilm,
+                                jumlahFilm,
+                                judulCari);
 
                     } else if (jenisCari == 2) {
 
@@ -163,7 +161,10 @@ public class Bioskop {
                         int nomorCari = scanner.nextInt();
                         scanner.nextLine();
 
-                        cariFilm(daftarFilm, jumlahFilm, nomorCari);
+                        cariFilm(
+                                daftarFilm,
+                                jumlahFilm,
+                                nomorCari);
 
                     } else {
 
@@ -185,7 +186,8 @@ public class Bioskop {
 
                     for (int i = 0; i < jumlahFilm; i++) {
 
-                        if (daftarFilm[i].getNomorFilm() == nomorPesan) {
+                        if (daftarFilm[i].getNomorFilm()
+                                == nomorPesan) {
 
                             pesanTiket(daftarFilm[i]);
                             ditemukan = true;
@@ -200,6 +202,42 @@ public class Bioskop {
                     break;
 
                 case 5:
+
+                    System.out.println();
+                    System.out.println("===== BERI RATING =====");
+
+                    System.out.print("Masukkan nomor film: ");
+                    int nomorRating = scanner.nextInt();
+                    scanner.nextLine();
+
+                    boolean filmDitemukan = false;
+
+                    for (int i = 0; i < jumlahFilm; i++) {
+
+                        if (daftarFilm[i].getNomorFilm()
+                                == nomorRating) {
+
+                            if (daftarFilm[i] instanceof DapatDinilai) {
+
+                                DapatDinilai filmDinilai =
+                                        (DapatDinilai) daftarFilm[i];
+
+                                filmDinilai.beriRating();
+
+                            }
+
+                            filmDitemukan = true;
+                            break;
+                        }
+                    }
+
+                    if (!filmDitemukan) {
+                        System.out.println("Film tidak ditemukan.");
+                    }
+
+                    break;
+
+                case 6:
 
                     isRunning = false;
 
@@ -217,27 +255,36 @@ public class Bioskop {
         scanner.close();
     }
 
-    // Method untuk menunjukkan Runtime Polymorphism / Dynamic Binding
+    // Runtime Polymorphism dan Dynamic Binding
 
     public static void pesanTiket(Film film) {
 
         System.out.println("===== TIKET DIPESAN =====");
+
         film.tampilkanInfo();
+
+        if (film instanceof DapatDipesan) {
+
+            DapatDipesan pemesanan =
+                    (DapatDipesan) film;
+
+            pemesanan.prosesPemesanan();
+        }
     }
 
-    // Overloading Modul 4
+    // Compile-time Polymorphism: Method Overloading
 
     public static void cariFilm(
-        Film[] daftarFilm,
-        int jumlahFilm,
-        String judul
-    ) {
+            Film[] daftarFilm,
+            int jumlahFilm,
+            String judul) {
 
         boolean ditemukan = false;
 
         for (int i = 0; i < jumlahFilm; i++) {
 
-            if (daftarFilm[i].getJudul().equalsIgnoreCase(judul)) {
+            if (daftarFilm[i].getJudul()
+                    .equalsIgnoreCase(judul)) {
 
                 daftarFilm[i].tampilkanInfo();
                 ditemukan = true;
@@ -250,16 +297,16 @@ public class Bioskop {
     }
 
     public static void cariFilm(
-        Film[] daftarFilm,
-        int jumlahFilm,
-        int nomorFilm
-    ) {
+            Film[] daftarFilm,
+            int jumlahFilm,
+            int nomorFilm) {
 
         boolean ditemukan = false;
 
         for (int i = 0; i < jumlahFilm; i++) {
 
-            if (daftarFilm[i].getNomorFilm() == nomorFilm) {
+            if (daftarFilm[i].getNomorFilm()
+                    == nomorFilm) {
 
                 daftarFilm[i].tampilkanInfo();
                 ditemukan = true;
