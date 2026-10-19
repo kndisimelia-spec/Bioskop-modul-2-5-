@@ -13,6 +13,16 @@ public class Bioskop {
         int jumlahFilm = 0;
         boolean isRunning = true;
 
+        // Data awal untuk semua variasi subclass
+        daftarFilm[jumlahFilm++] =
+                new Film2D("Avengers", 101, "12:00", 1);
+
+        daftarFilm[jumlahFilm++] =
+                new Film3D("Avatar", 102, "15:00", 2);
+
+        daftarFilm[jumlahFilm++] =
+                new FilmPremium("Interstellar", 103, "19:00", 3);
+
         System.out.println("================================");
         System.out.println("       SISTEM BIOSKOP KITA");
         System.out.println("================================");
@@ -100,11 +110,13 @@ public class Bioskop {
                                 jumlahFilm++;
                             }
 
-                            System.out.println("Jadwal film berhasil ditambahkan.");
+                            System.out.println(
+                                    "Jadwal film berhasil ditambahkan.");
 
                         } else {
 
-                            System.out.println("Jenis film tidak tersedia.");
+                            System.out.println(
+                                    "Jenis film tidak tersedia.");
                         }
 
                     } else {
@@ -119,15 +131,20 @@ public class Bioskop {
                     System.out.println();
                     System.out.println("===== JADWAL FILM =====");
 
+                    System.out.println(
+                            "Jumlah film: " + Film.getJumlahFilm());
+
                     if (jumlahFilm == 0) {
 
-                        System.out.println("Tidak ada jadwal film.");
+                        System.out.println(
+                                "Tidak ada jadwal film.");
 
                     } else {
 
                         for (int i = 0; i < jumlahFilm; i++) {
 
                             System.out.println();
+
                             daftarFilm[i].tampilkanInfo();
                         }
                     }
@@ -168,7 +185,8 @@ public class Bioskop {
 
                     } else {
 
-                        System.out.println("Pilihan tidak tersedia.");
+                        System.out.println(
+                                "Pilihan tidak tersedia.");
                     }
 
                     break;
@@ -190,13 +208,16 @@ public class Bioskop {
                                 == nomorPesan) {
 
                             pesanTiket(daftarFilm[i]);
+
                             ditemukan = true;
                             break;
                         }
                     }
 
                     if (!ditemukan) {
-                        System.out.println("Film tidak ditemukan.");
+
+                        System.out.println(
+                                "Film tidak ditemukan.");
                     }
 
                     break;
@@ -217,22 +238,30 @@ public class Bioskop {
                         if (daftarFilm[i].getNomorFilm()
                                 == nomorRating) {
 
-                            if (daftarFilm[i] instanceof DapatDinilai) {
+                            filmDitemukan = true;
+
+                            if (daftarFilm[i]
+                                    instanceof DapatDinilai) {
 
                                 DapatDinilai filmDinilai =
                                         (DapatDinilai) daftarFilm[i];
 
                                 filmDinilai.beriRating();
 
+                            } else {
+
+                                System.out.println(
+                                        "Film tidak dapat diberi rating.");
                             }
 
-                            filmDitemukan = true;
                             break;
                         }
                     }
 
                     if (!filmDitemukan) {
-                        System.out.println("Film tidak ditemukan.");
+
+                        System.out.println(
+                                "Film tidak ditemukan.");
                     }
 
                     break;
@@ -242,13 +271,15 @@ public class Bioskop {
                     isRunning = false;
 
                     System.out.println();
-                    System.out.println("Terima kasih.");
+                    System.out.println("Terima kasih telah menggunakan "
+                            + "Sistem Bioskop Kita.");
 
                     break;
 
                 default:
 
-                    System.out.println("Pilihan tidak tersedia.");
+                    System.out.println(
+                            "Pilihan tidak tersedia.");
             }
         }
 
@@ -259,6 +290,7 @@ public class Bioskop {
 
     public static void pesanTiket(Film film) {
 
+        System.out.println();
         System.out.println("===== TIKET DIPESAN =====");
 
         film.tampilkanInfo();
@@ -269,6 +301,11 @@ public class Bioskop {
                     (DapatDipesan) film;
 
             pemesanan.prosesPemesanan();
+
+        } else {
+
+            System.out.println(
+                    "Film ini tidak dapat dipesan.");
         }
     }
 
@@ -287,11 +324,13 @@ public class Bioskop {
                     .equalsIgnoreCase(judul)) {
 
                 daftarFilm[i].tampilkanInfo();
+
                 ditemukan = true;
             }
         }
 
         if (!ditemukan) {
+
             System.out.println("Film tidak ditemukan.");
         }
     }
@@ -309,11 +348,13 @@ public class Bioskop {
                     == nomorFilm) {
 
                 daftarFilm[i].tampilkanInfo();
+
                 ditemukan = true;
             }
         }
 
         if (!ditemukan) {
+
             System.out.println("Film tidak ditemukan.");
         }
     }

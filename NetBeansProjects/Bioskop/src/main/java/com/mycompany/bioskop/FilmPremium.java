@@ -12,6 +12,7 @@ public class FilmPremium extends Film
             int studio) {
 
         super(judul, nomorFilm, jamTayang);
+
         this.studio = studio;
     }
 
@@ -25,24 +26,31 @@ public class FilmPremium extends Film
 
     @Override
     public void tampilkanInfo() {
+
         System.out.println("===== FILM PREMIUM =====");
+
         super.tampilkanInfo();
+
         System.out.println("Studio     : " + studio);
     }
 
     @Override
     public void tampilkanJenisFilm() {
+
         System.out.println("Jenis Film : Premium");
     }
 
     @Override
     public void beriRating() {
+
         System.out.println(
-                "Film " + getJudul() + " dapat diberi rating.");
+                "Film " + getJudul()
+                + " dapat diberi rating.");
     }
 
     @Override
     public void prosesPemesanan() {
+
         System.out.println(
                 "Pemesanan tiket film Premium berhasil diproses.");
     }
