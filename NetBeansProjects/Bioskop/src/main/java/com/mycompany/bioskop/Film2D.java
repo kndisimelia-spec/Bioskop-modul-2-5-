@@ -12,6 +12,7 @@ public class Film2D extends Film
             int studio) {
 
         super(judul, nomorFilm, jamTayang);
+
         this.studio = studio;
     }
 
@@ -25,24 +26,31 @@ public class Film2D extends Film
 
     @Override
     public void tampilkanInfo() {
+
         System.out.println("===== FILM 2D =====");
+
         super.tampilkanInfo();
+
         System.out.println("Studio     : " + studio);
     }
 
     @Override
     public void tampilkanJenisFilm() {
+
         System.out.println("Jenis Film : 2D");
     }
 
     @Override
     public void beriRating() {
+
         System.out.println(
-                "Film " + getJudul() + " dapat diberi rating.");
+                "Film " + getJudul()
+                + " dapat diberi rating.");
     }
 
     @Override
     public void prosesPemesanan() {
+
         System.out.println(
                 "Pemesanan tiket film 2D berhasil diproses.");
     }
